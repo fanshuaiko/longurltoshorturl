@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>短网址服务</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script>
+        $(function () {
+            $("#btn").click(function () {
+                if (judgeURL($("#longURL").val()) == true&&judgeNumber($("#shortURLLength").val()) == true) {
+                    var data = {
+                        longURL: $("#longURL").val(),
+                        shortURLEncode: $("#shortURLEncode option:selected").val(),
+                        shortURLLength: $("#shortURLLength").val()
+                    }
+                    $.ajax({
+                        url: '/LongToShortController/LongToShort',
+                        data: JSON.stringify(data),
+                        dataType: 'json',
+                        contentType: "application/json; charset=utf-8",
+                        type: 'post',
+                        success: function (result) {
+                            console.log(result)
+                            $("#aShortURL").text(result.shortURL);
+                            $("#showShortURL").attr("style", "display:block");
+                            $("#shortURL").click(function () {
+                                // $("#shortURL").attr("href",result.longURL)
+                                $.ajax({
+                                    url: '/LongToShortController/redirectToLongURL',
+                                    data: JSON.stringify(data),
+                                    dataType: 'json',
+                                    contentType: "application/json; charset=utf-8",
+                                    type: 'post',
+                                })
+                            })
+                        },
+                        error: function () {
+                            alert("转换失败！")
+                        }
+                    })
+                }
+            })
+        })
+
+        $(function () {
+            $("#manualBtn").click(function () {
+                $("#manualDiv").attr("style", "display:block");
+                $("#randomDiv").attr("style", "display:none");
+            })
+        });
+        $(function () {
+            $("#randomBtn").click(function () {
+                $("#manualDiv").attr("style", "display:none");
+                $("#randomDiv").attr("style", "display:block");
+            })
+        });
+        $(function () {
+            $("#btn2").click(function () {
+                if (judgeURL($("#longURL2").val()) == true&&judgeURL($("#shortURL2").val()) == true) {
+                var data = {
+                    longURL: $("#longURL2").val(),
+                    shortURL: $("#shortURL2").val()
+                }
+                $.ajax({
+                    url: '/LongToShortController/saveShortURL',
+                    data: JSON.stringify(data),
+                    dataType: 'json',
+                    contentType: "application/json; charset=utf-8",
+                    type: 'post',
+                    success: function (result) {
+                        $("#showShortURL2").attr("style", "display:block");
+                        if (result.shortURL != $("#shortURL2").val()) {
+                            $("#aShortURL2").text("该长链接已存在短链接");
+                        } else if (result.longURL == $("#longURL2").val()) {
+                            $("#aShortURL2").text(result.shortURL);
+                        } else {
+                            $("#aShortURL2").text("创建失败！");
+                        }
+                    }
+
+                })
+            }
+            })
+        })
+ <!--判断输入的网址是否正确-->
+function judgeURL(url){
+    var str=url;
+    //判断URL地址的正则表达式为:http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?
+    //下面的代码中应用了转义字符"\"输出一个字符"/"
+    var Expression=/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+    var objExp=new RegExp(Expression);
+    if(objExp.test(str) != true){
+        alert("网址格式不正确！请重新输入");
+        return false;
+    }else{
+        return true;
+    }
+}
+<!--判断输入的长度是否为正整数-->
+function judgeNumber(length){
+    var r = /^\+?[1-9][0-9]*$/;
+    if (r.test(length)) {
+       return true;
+    } else {
+        alert("请输入正整数");
+        return false;
+    }
+}
+
+    </script>
+</head>
+<body>
+
+<div>
+    <button type="button" class="btn btn-success" id="randomBtn">随机生成短链接</button>
+    <button type="button" class="btn btn-info" id="manualBtn">手动设置短链接</button>
+</div>
+
+<div style="display: block" class="input-group col-md-3" style="margin-top: 20%;margin-left: 35%" id="randomDiv">
+    <input type="text" class="form-control" placeholder="请输入长链" id="longURL">
+    <select class="form-control" id="shortURLEncode">
+        <option value="">选择字符集</option>
+        <option value="UTF-8">UTF-8</option>
+        <option value="GBK">GBK</option>
+        <option value="ISO-8859-1">ISO-8859-1</option>
+    </select>
+    <input type="text" class="form-control" placeholder="请输入生成的短链接长度" id="shortURLLength">
+    <button class="btn btn-info btn-search" id="btn">生成短链</button>
+      <div style="display: none" id="showShortURL">
+        <h5>短链接为：</h5>
+        <a id="aShortURL" href="#"></a>
+    </div>
+</div>
+<div style="display: none" class="input-group col-md-3" style="margin-top: 20%;margin-left: 35%" id="manualDiv">
+    <input type="text" class="form-control" placeholder="请输入长链" id="longURL2">
+    <input type="text" class="form-control" placeholder="请输入短链接" id="shortURL2">
+    <button class="btn btn-info btn-search" id="btn2">生成短链</button>
+    <div style="display: none" id="showShortURL2">
+        <h5>短链接为：</h5>
+        <a id="aShortURL2" href="#"></a>
+    </div>
+</div>
+</body>
+</html>

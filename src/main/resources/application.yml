@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    username: root
+    password: mysql123
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql:///LongToShort?useUnicode=true&characterEncoding=utf8&useSSL=false
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+
