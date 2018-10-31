@@ -15,5 +15,5 @@
 
 实现功能：  
 1.随机生成短链接，可设置字符集和短链接长度（此处长度指http://后面的位数）  
-![显示效果图](https://github.com/fanshuaiko/longurltoshorturl/tree/master/images/20181101054730.png）  
+![显示效果图](https://github.com/fanshuaiko/longurltoshorturl/raw/master/images/20181101054730.png）  
 2.自己手动设置短链接  
