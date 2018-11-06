@@ -25,7 +25,12 @@
 5.jquery判断输入网址是否正确，判断输出长度是否为正整数  
 
 ![](https://github.com/fanshuaiko/longurltoshorturl/blob/master/images/20181101054730.png)  
+
 ![](https://github.com/fanshuaiko/longurltoshorturl/blob/master/images/20181101054811.png)  
-![](https://github.com/fanshuaiko/longurltoshorturl/blob/master/images/20181101054844.png)
-![](https://github.com/fanshuaiko/longurltoshorturl/blob/master/images/20181101054930.png)
-![](https://github.com/fanshuaiko/longurltoshorturl/blob/master/images/20181101055959.png)
+
+![](https://github.com/fanshuaiko/longurltoshorturl/blob/master/images/20181101054844.png)  
+
+![](https://github.com/fanshuaiko/longurltoshorturl/blob/master/images/20181101054930.png)  
+
+![](https://github.com/fanshuaiko/longurltoshorturl/blob/master/images/20181101055959.png)  
+
