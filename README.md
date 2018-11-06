@@ -23,7 +23,7 @@
 4.支持访问计数  
 
 5.jquery判断输入网址是否正确，判断输出长度是否为正整数  
-
+  
 ![](https://github.com/fanshuaiko/longurltoshorturl/blob/master/images/20181101054730.png)  
 
 ![](https://github.com/fanshuaiko/longurltoshorturl/blob/master/images/20181101054811.png)  
